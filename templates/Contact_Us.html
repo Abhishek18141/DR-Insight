@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+            color: #333;
+            line-height: 1.6;
+        }
+        .navbar {
+            background-color: #ADD8E6; /* Light blue background */
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar h1 {
+            font-size: 2.5rem; /* Keep smaller than Code 2 */
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .nav-buttons a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+            background-color: #004494;
+        }
+        .nav-buttons a:hover {
+            background-color: #002a6e;
+        }
+
+        .hero {
+            background: url('../static/images/84770f_354d7d9db0344028a08a2a46f2bf82cc~mv2_d_3501_2554_s_4_2.jpg') no-repeat center center/cover;
+            height: 450px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+            padding: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+        .hero h2 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        .hero .slogan {
+            font-size: 1.5rem;
+            font-style: italic;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .contact-section {
+            padding: 40px 20px;
+            background-color: white;
+            max-width: 800px;
+            margin: 30px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .contact-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: #6200ea;
+            margin-bottom: 20px;
+        }
+        .contact-section form {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .form-group textarea {
+            height: 120px;
+            resize: none;
+        }
+        .form-group button {
+            background-color: #6200ea;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .form-group button:hover {
+            background-color: #3700b3;
+        }
+        footer {
+            padding: 20px;
+            text-align: center;
+            background-color: #333;
+            color: white;
+        }
+        footer a {
+            color: #bb86fc;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <h1>Diabetic Retinopathy Classifier</h1>
+        <div class="nav-buttons">
+            <a href="/">Homepage</a>
+            <a href="/Binary_Classification">Binary Classification</a>
+            <a href="/Multiclass_Classification">Multiclass Classification</a>
+            <a href="/About_Project">About Project</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h2>Get in Touch</h2>
+        <p>Have questions or need assistance? We're here to help! Reach out to us for inquiries, collaborations, or support.</p>
+        <p class="slogan">Connecting You to Clarity—Let's Talk!</p>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <h2>We'd Love to Hear From You</h2>
+        <form action="#" method="post">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+            </div>
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" placeholder="Enter the subject" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Your Message</label>
+                <textarea id="message" name="message" placeholder="Write your message here" required></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit">Send Message</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Diabetic Retinopathy Classification. <a href="/">Homepage</a></p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Classification</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+            color: #333;
+            line-height: 1.6;
+        }
+        .navbar {
+            background-color: #ADD8E6; /* Light blue background */
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar h1 {
+            font-size: 2.5rem; /* Keep smaller than Code 2 */
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .nav-buttons a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+            background-color: #004494;
+        }
+        .nav-buttons a:hover {
+            background-color: #002a6e;
+        }
+
+        .hero {
+            background: url('../static/images/84770f_354d7d9db0344028a08a2a46f2bf82cc~mv2_d_3501_2554_s_4_2.jpg') no-repeat center center/cover;
+            height: 450px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+            padding: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+        .hero h2 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        .hero .slogan {
+            font-size: 1.5rem;
+            font-style: italic;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .info-section {
+            padding: 40px 20px;
+            background-color: white;
+            max-width: 900px;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .info-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #6200ea;
+        }
+        .info-section p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        .demo-images {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .demo-images h2 {
+            text-align: center;
+            color: #6200ea;
+        }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            justify-items: center;
+            margin-top: 20px;
+        }
+        .image-grid img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .upload-section {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            margin: 20px auto;
+            max-width: 900px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .upload-section input[type="file"] {
+            margin-top: 10px;  
+        }
+        .uploaded-image {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .uploaded-image img {
+            max-width: 400px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
+        .classification-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .classification-buttons button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #6200ea;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+        .classification-buttons button:hover {
+            background-color: #3700b3;
+        }
+        .output-area {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #f3f4f6;
+            border: 1px dashed #6200ea;
+            border-radius: 8px;
+            max-width: 900px;
+            margin: 20px auto;
+            font-size: 1.2rem;
+            color: #333;
+        }
+        footer {
+            padding: 20px;
+            text-align: center;
+            background-color: #333;
+            color: white;
+        }
+        footer a {
+            color: #bb86fc;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <h1>Diabetic Retinopathy Classifier</h1>
+        <div class="nav-buttons">
+            <a href="/">Homepage</a>
+            <a href="/Multiclass_Classification">Multiclass Classification</a>
+            <a href="/About_Project">About Project</a>
+            <a href="/Contact_Us">Contact Us</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h2>Binary Classification</h2>
+        <p>This page focuses on the binary classification of Diabetic Retinopathy using ML, DL, and Hybrid models.</p>
+        <p class="slogan">"Diabetic Retinopathy? Yes or No—Let AI Decide!"</p>
+    </section>
+
+    <div class="info-section">
+        <h2>About Binary Classification</h2>
+        <p>Binary classification focuses on identifying whether a given retina image indicates the presence or absence of Diabetic Retinopathy. This process uses:</p>
+        <ul>
+            <li><b>ML (Machine Learning):</b> HOG for feature extraction and MLP for classification.</li>
+            <li><b>DL (Deep Learning):</b> InceptionV3 for end-to-end feature extraction and classification.</li>
+            <li><b>Hybrid Model:</b> MobileNetV2 for feature extraction and MLP for classification.</li>
+        </ul>
+    </div>
+    <div class="demo-images">
+        <h2>Demo Images</h2>
+        <h3>No Diabetic Retinopathy</h3>
+        <div class="image-grid">
+            <img src="static/images/0/1f4fb37e0854.png" alt="No Diabetic Retinopathy">
+            <img src="static/images/0/002c21358ce6.png" alt="No Diabetic Retinopathy">
+            <img src="static/images/0/005b95c28852.png" alt="No Diabetic Retinopathy">
+            <img src="static/images/0/0097f532ac9f.png" alt="No Diabetic Retinopathy">
+        </div>
+        <h3>Diabetic Retinopathy</h3>
+        <div class="image-grid">
+            <img src="static\images\3\0104b032c141.png" alt="Diabetic Retinopathy">
+            <img src="static\images\1\0024cdab0c1e.png" alt="Diabetic Retinopathy">
+            <img src="static\images\4\001639a390f0.png" alt="Diabetic Retinopathy">
+            <img src="static\images\4\262ad704319c.png" alt="Diabetic Retinopathy">
+        </div>
+    </div>
+    <div class="upload-section">
+        <h2>Upload an Image for Classification</h2>
+        <form id="upload-form" enctype="multipart/form-data">
+            <input type="file" name="image" id="image" accept="image/*" required>
+            <div class="classification-buttons">
+                <button type="button" onclick="classifyImage('ml')">ML Model</button>
+                <button type="button" onclick="classifyImage('dl')">DL Model</button>
+                <button type="button" onclick="classifyImage('hybrid')">Hybrid Model</button>
+                <button type="button" onclick="cleanData()">Clean Data</button>
+            </div>
+        </form>
+        <div class="uploaded-image" id="uploaded-image"></div>
+    </div>
+    <div class="output-area" id="output-area">
+        Click a classification button to see the result here.
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Binary Classification Page. Designed with care. <a href="/Contact_Us">Contact Us</a></p>
+    </footer>
+
+    <script>
+        // Handle image preview
+        document.getElementById('image').addEventListener('change', function (e) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var img = document.createElement('img');
+                img.src = reader.result;
+                img.alt = 'Uploaded Image';
+                document.getElementById('uploaded-image').innerHTML = '';
+                document.getElementById('uploaded-image').appendChild(img);
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+        // AJAX to send form data and update output
+        function classifyImage(model) {
+            const form = document.getElementById('upload-form');
+            const formData = new FormData(form);
+
+            fetch(`/predict_binary/${model}`, {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const outputArea = document.getElementById('output-area');
+                    outputArea.textContent = data.result; // Display the result
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('output-area').textContent = 'An error occurred. Please try again.';
+                });
+        }
+
+        // Function to clean data
+        function cleanData() {
+            // Clear the file input
+            document.getElementById('image').value = '';
+
+            // Clear the uploaded image preview
+            document.getElementById('uploaded-image').innerHTML = '';
+
+            // Clear the output area
+            document.getElementById('output-area').textContent = 'Click a classification button to see the result here.';
+        }
+    </script>
+</body>
+</html>

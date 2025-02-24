@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Diabetic Retinopathy Detection</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+            color: #333;
+            line-height: 1.6;
+        }
+        .navbar {
+            background-color: #ADD8E6;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .nav-buttons a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+            background-color: #004494;
+        }
+        .nav-buttons a:hover {
+            background-color: #002a6e;
+        }
+        .hero {
+            background: url('../static/images/84770f_354d7d9db0344028a08a2a46f2bf82cc~mv2_d_3501_2554_s_4_2.jpg') no-repeat center center/cover;
+            height: 450px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+            padding: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+        .hero h2 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        .hero .slogan {
+            font-size: 1.5rem;
+            font-style: italic;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .container {
+            padding: 40px 20px;
+            max-width: 1100px;
+            margin: 20px auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .container h2 {
+            color: #6200ea;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .container h3 {
+            color: #6200ea;
+            font-size: 2rem;
+            margin-top: 30px;
+        }
+        .container h4 {
+            color:#333;
+            font-size: 1.5rem;
+            margin-top: 30px;
+        }
+        .container h5 {
+            color:#333;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #0288d1;
+            color: white;
+        }
+        td {
+            background-color: #f9f9f9;
+        }
+        .highlight {
+            background-color: #FFE0B2;
+            color: #333;   
+        }
+        .selected-model {
+            background-color: #ffeb3b;
+            color: #000080;
+            font-weight: bold;
+        }
+        footer {
+            padding: 20px;
+            text-align: center;
+            background-color: #333;
+            color: white;
+        }
+        footer a {
+            color: #64b5f6;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <h1>Diabetic Retinopathy Classifier</h1>
+        <div class="nav-buttons">
+            <a href="/">Homepage</a>
+            <a href="/Binary_Classification">Binary Classification</a>
+            <a href="/Multiclass_Classification">Multiclass Classification</a>
+            <a href="/Contact_Us">Contact Us</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h2>Understanding Our AI-Powered DR Detection</h2>
+        <p>Explore how Machine Learning, Deep Learning, and Hybrid models revolutionize Diabetic Retinopathy detection with precision and reliability.</p>
+        <p class="slogan">"AI-Driven Diagnosis: Detect Early, Treat Smarter, Protect Vision."</p>
+    </section>
+
+    <div class="container">
+        <h2>Diabetic Retinopathy Detection: Project Overview</h2>
+        <h3>Introduction</h3>
+        <p>Diabetic Retinopathy (DR) is a major cause of blindness, and early detection is crucial for effective treatment. This project classifies retina images into binary (No DR / DR) and multiclass (No DR, Mild NPDR, Moderate NPDR, Severe NPDR, PDR) categories using Machine Learning (ML), Deep Learning (DL), and Hybrid approaches.</p>
+        <h4>Machine Learning Models (ML)</h4>
+        <p>For ML-based classification, we extracted HOG (Histogram of Oriented Gradients) features from retina images and trained seven different models.</p>
+        <h5>Preprocessing Steps for ML</h5>
+        <ul>
+            <li>Convert image to grayscale.</li>
+            <li>Resize image to 256x256.</li>
+            <li>Apply contrast enhancement and noise reduction.</li>
+            <li>Extract HOG features for model input.</li>
+        </ul>
+        <h5>Models and Performance</h5>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Binary Accuracy</th>
+                        <th>Multiclass Accuracy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Support Vector Machine (SVM)</td>
+                        <td>93.17%</td>
+                        <td>67.39%</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">Multi-Layer Perceptron (MLP)</td>
+                        <td class="highlight">93.72%</td>
+                        <td class="highlight">72.16%</td>
+                    </tr>
+                    <tr>
+                        <td>Random Forest (RF)</td>
+                        <td>90.99%</td>
+                        <td>71.62%</td>
+                    </tr>
+                    <tr>
+                        <td>K-Nearest Neighbors (KNN)</td>
+                        <td>89.63%</td>
+                        <td>69.16%</td>
+                    </tr>
+                    <tr>
+                        <td>Logistic Regression</td>
+                        <td>93.45%</td>
+                        <td>70.66%</td>
+                    </tr>
+                    <tr>
+                        <td>Naive Bayes</td>
+                        <td>87.58%</td>
+                        <td>59.48%</td>
+                    </tr>
+                    <tr>
+                        <td>Decision Tree</td>
+                        <td>86.76%</td>
+                        <td>61.52%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h4>Deep Learning Models (DL)</h4>
+        <p>Deep Learning models use CNN-based architectures to extract high-level features automatically. We used MobileNetV2 and InceptionV3.</p>
+
+        <h5>Preprocessing Steps for DL</h5>
+        <ul>
+            <li>Resize image to 299x299 for InceptionV3 and 224x224 for MobileNetV2.</li>
+            <li>Apply ImageNet normalization.</li>
+           <li>Extract features using pretrained models.</li>
+        </ul>
+
+        <h5>Models and Performance</h5>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Architecture</th>
+                        <th>Binary Accuracy</th>
+                        <th>Multiclass Accuracy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>MobileNetV2</td>
+                        <td>CNN</td>
+                        <td>72.30%</td>
+                        <td>95.36%</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">InceptionV3</td>
+                        <td class="highlight">CNN</td>
+                        <td class="highlight">75.72%</td>
+                        <td class="highlight">96.32%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h4>Hybrid Models (DL + ML)</h4>
+        <p>Hybrid models combine Deep Learning feature extraction (MobileNetV2/InceptionV3) with ML classifiers.</p>
+
+        <h5>Preprocessing Steps for Hybrid</h5>
+        <ul>
+            <li>Extract features using MobileNetV2/InceptionV3.</li>
+            <li>Use ML models (SVM, MLP, RF, KNN, Logistic Regression, Naïve Bayes, Decision Tree) for classification.</li>
+        </ul>
+
+        <h5>Models and Performance</h5>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Hybrid Model</th>
+                        <th>Feature Extractor</th>
+                        <th>ML Classifier</th>
+                        <th>Binary Accuracy</th>
+                        <th>Multiclass Accuracy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>MobileNetV2 + SVM</td>
+                        <td>MobileNetV2</td>
+                        <td>SVM</td>
+                        <td>95.49%</td>
+                        <td>75.30%</td>
+                    </tr>
+                    <tr>
+                        <td>MobileNetV2 + MLP</td>
+                        <td>MobileNetV2</td>
+                        <td>MLP</td>
+                        <td class="highlight">96.58%</td>
+                        <td>74.21%</td>
+                    </tr>
+                    <tr>
+                        <td>MobileNetV2 + Random Forest</td>
+                        <td>MobileNetV2</td>
+                        <td>RF</td>
+                        <td>95.63%</td>
+                        <td>75.85%</td>
+                    </tr>
+                    <tr>
+                        <td>MobileNetV2 + KNN</td>
+                        <td>MobileNetV2</td>
+                        <td>KNN</td>
+                        <td>94.54%</td>
+                        <td>74.21%</td>
+                    </tr>
+                    <tr>
+                        <td>MobileNetV2 + Logistic Regression</td>
+                        <td>MobileNetV2</td>
+                        <td>Logistic Regression</td>
+                        <td>96.04%</td>
+                        <td>75.57%</td>
+                    </tr>
+                    <tr>
+                        <td>MobileNetV2 + Naïve Bayes</td>
+                        <td>MobileNetV2</td>
+                        <td>Naïve Bayes</td>
+                        <td>89.35%</td>
+                        <td>58.25%</td>
+                    </tr>
+                    <tr>
+                        <td>MobileNetV2 + Decision Tree</td>
+                        <td>MobileNetV2</td>
+                        <td>Decision Tree</td>
+                        <td>89.90%</td>
+                        <td>63.71%</td>
+                    </tr>
+                    <tr>
+                        <td>InceptionV3 + SVM</td>
+                        <td>InceptionV3</td>
+                        <td>SVM</td>
+                        <td>95.36%</td>
+                        <td>73.80%</td>
+                    </tr>
+                    <tr>
+                        <td>InceptionV3 + MLP</td>
+                        <td>InceptionV3</td>
+                        <td>MLP</td>
+                        <td>94.95%</td>
+                        <td class="highlight">76.39%</td>
+                    </tr>
+                    <tr>
+                        <td>InceptionV3 + Random Forest</td>
+                        <td>InceptionV3</td>
+                        <td>RF</td>
+                        <td>95.90%</td>
+                        <td>74.48%</td>
+                    </tr>
+                    <tr>
+                        <td>InceptionV3 + KNN</td>
+                        <td>InceptionV3</td>
+                        <td>KNN</td>
+                        <td>93.45%</td>
+                        <td>71.75%</td>
+                    </tr>
+                    <tr>
+                        <td>InceptionV3 + Logistic Regression</td>
+                        <td>InceptionV3</td>
+                        <td>Logistic Regression</td>
+                        <td>96.18%</td>
+                        <td>75.30%</td>
+                    </tr>
+                    <tr>
+                        <td>InceptionV3 + Naïve Bayes</td>
+                        <td>InceptionV3</td>
+                        <td>Naïve Bayes</td>
+                        <td>91.81%</td>
+                        <td>59.48%</td>
+                   </tr>
+                    <tr>
+                        <td>InceptionV3 + Decision Tree</td>
+                        <td>InceptionV3</td>
+                        <td>Decision Tree</td>
+                        <td>88.26%</td>
+                        <td>57.70%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <h4>Selected Model for Frontend</h4>
+        <p>After evaluating multiple models, we selected the best-performing models for the frontend:</p>
+        <h5>Approach-wise Best Performing Models</h5>
+        <div class="selected_model">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="selected-model">Approach</th>
+                        <th class="selected-model">Binary Classification</th>
+                        <th class="selected-model">Multiclass Classification</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Machine Learning (ML)</td>
+                        <td>MLP</td>
+                        <td>MLP</td>
+                    </tr>
+                    <tr>
+                        <td>Deep Learning (DL)</td>
+                        <td>MobileNetV2</td>
+                        <td>MobileNetV2</td>
+                    </tr>
+                    <tr>
+                        <td>Hybrid (DL + ML)</td>
+                        <td>MobileNetV2 + MLP</td>
+                        <td>InceptionV3 + MLP</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2025 Diabetic Retinopathy Detection | <a href="/Contact_Us">Contact Us</a></p>
+    </footer>
+
+</body>
+</html>
