@@ -3,6 +3,7 @@ Flask-SQLAlchemy
 tensorflow
 numpy
 scikit-image
+scikit-learn
 Pillow
 joblib
 gunicorn
