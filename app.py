@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, send_from_directory, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -15,11 +16,14 @@ binary_hybrid = joblib.load('models/MLP_hybrid_DL2_BC.pkl')
 multiclass_hybrid = joblib.load('models/MLP_hybrid_DL1_MC.pkl')
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost:3307/dr'
+
+# Update with Render PostgreSQL database URL
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://retina_database_user:79ee5LOq1e1vLveMrbbte4vtnugMaHdV@dpg-cuv1bopu0jms73a00krg-a/retina_database')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 # Contact us model
-class contactus(db.Model):
+class ContactUs(db.Model):
     SrNo = db.Column(db.Integer, primary_key=True)
     Full_Name = db.Column(db.String(50), nullable=False)
     Email = db.Column(db.String(25), nullable=False)
@@ -51,21 +55,18 @@ def about():
 @app.route('/Contact_Us', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
-        # Get form data
         Full_Name = request.form.get('name')
         Email = request.form.get('email')
         Subject = request.form.get('subject')
         Message = request.form.get('message')
         
-        # Check if all fields are provided
         if Full_Name and Email and Subject and Message:
-            # Create a new entry in the Contacts table
-            entry = contactus(Full_Name=Full_Name, Email=Email, Subject=Subject, Message=Message, Date_and_Time=datetime.now())
+            entry = ContactUs(Full_Name=Full_Name, Email=Email, Subject=Subject, Message=Message, Date_and_Time=datetime.now())
             db.session.add(entry)
             try:
-                db.session.commit()  # Commit to save data to the database
+                db.session.commit()
             except Exception as e:
-                db.session.rollback()  # Rollback if there's any error
+                db.session.rollback()
                 print(f"Error: {e}")
                 return "There was an issue saving your data to the database."
             
@@ -78,111 +79,72 @@ def contact():
 @app.route('/predict_binary/<model>', methods=['POST'])
 def predict_binary(model):
     try:
-        # Debug: Print request files
-        print("Request files:", request.files)
-
-        # Check if an image is uploaded
         if 'image' not in request.files:
             return jsonify({'result': 'No image uploaded!'}), 400
 
         image_file = request.files['image']
-
-        # Debug: Print image file details
-        print("Image file received:", image_file)
-        print("Image filename:", image_file.filename)
-
-        # Check if the file is empty
         if image_file.filename == '':
             return jsonify({'result': 'No image selected!'}), 400
 
-        # Read the image file
         image = Image.open(image_file.stream)
 
-        # Debug: Print image details
-        print("Image format:", image.format)
-        print("Image size:", image.size)
-
-
-        # Preprocess the image based on the selected model
         if model == 'ml':
             processed_image = preprocess_ml_image(image)
             prediction = binary_ml.predict(processed_image)
-            if prediction==0:
-                predicted_label = "No Diabetic Retinopathy"
-            elif prediction==1:
-                predicted_label = "Diabetic Retinopathy"
+            predicted_label = "No Diabetic Retinopathy" if prediction == 0 else "Diabetic Retinopathy"
 
         elif model == 'dl':
             processed_image = preprocess_dl_image(image)
             prediction = binary_dl.predict(processed_image)
             predicted_label = "No Diabetic Retinopathy" if prediction < 0.5 else "Diabetic Retinopathy"
+
         elif model == 'hybrid':
             processed_image = preprocess_hybrid_binary_image(image)
             prediction = binary_hybrid.predict(processed_image)
             predicted_label = "No Diabetic Retinopathy" if prediction < 0.5 else "Diabetic Retinopathy"
+
         else:
             return jsonify({'result': 'Invalid model type!'}), 400
 
         return jsonify({'result': f'{model.upper()} Model Prediction: {predicted_label}'})
     except Exception as e:
-        print(f"Error during prediction: {e}")  # For debugging purposes
+        print(f"Error during prediction: {e}")
         return jsonify({'result': f'An error occurred: {str(e)}'}), 500
 
-# Predict Multiclass Classification route
 @app.route('/predict_multiclass/<model>', methods=['POST'])
 def predict_multiclass(model):
     try:
-        # Debug: Print request files
-        print("Request files:", request.files)
-
-        # Check if an image is uploaded
         if 'image' not in request.files:
             return jsonify({'result': 'No image uploaded!'}), 400
 
         image_file = request.files['image']
-
-        # Debug: Print image file details
-        print("Image file received:", image_file)
-        print("Image filename:", image_file.filename)
-
-        # Check if the file is empty
         if image_file.filename == '':
             return jsonify({'result': 'No image selected!'}), 400
 
-        # Read the image file
         image = Image.open(image_file.stream)
 
-        # Debug: Print image details
-        print("Image format:", image.format)
-        print("Image size:", image.size)
-
-        # Preprocess the image based on the selected model
         if model == 'ml':
             processed_image = preprocess_ml_image(image)
             prediction = multiclass_ml.predict(processed_image)[0]
+
         elif model == 'dl':
             processed_image = preprocess_dl_image(image)
             prediction = multiclass_dl.predict(processed_image).argmax(axis=1)[0]
+
         elif model == 'hybrid':
             processed_image = preprocess_hybrid_multiclass_image(image)
             prediction = multiclass_hybrid.predict(processed_image)[0]
+
         else:
             return jsonify({'result': 'Invalid model type!'}), 400
 
-        # Map prediction to class label
         labels = ["No DR", "Mild Non-Proliferative DR", "Moderate DR", "Severe DR", "Proliferative DR"]
         predicted_label = labels[int(prediction)]
 
         return jsonify({'result': f'{model.upper()} Model Prediction: {predicted_label}'})
     except Exception as e:
-        print(f"Error during multiclass prediction: {e}")  # For debugging purposes
+        print(f"Error during multiclass prediction: {e}")
         return jsonify({'result': f'An error occurred: {str(e)}'}), 500
 
-
-# Route to serve PDFs
-# @app.route('/pdfs/<filename>')
-# def download_pdf(filename):
-#     return send_from_directory('static/pdfs', filename)
-
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
