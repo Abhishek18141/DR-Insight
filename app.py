@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, send_from_directory, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from preprocessing_ML_DL_Hybrid import preprocess_hybrid_binary_image
+from preprocessing_Hybrid import preprocess_hybrid
 import joblib
 import tensorflow as tf
 from PIL import Image
@@ -116,7 +116,7 @@ def predict_binary(model):
         # Preprocess the image based on the selected model
         if model == 'hybrid':
             model_instance = load_binary_hybrid_model()
-            processed_image = preprocess_hybrid_binary_image(image)
+            processed_image = preprocess_hybrid(image)
             prediction = model_instance.predict(processed_image)
             predicted_label = "No Diabetic Retinopathy" if prediction < 0.5 else "Diabetic Retinopathy"
         else:
@@ -158,7 +158,7 @@ def predict_multiclass(model):
         # Preprocess the image based on the selected model
         if model == 'hybrid':
             model_instance = load_multiclass_hybrid_model()
-            processed_image = preprocess_hybrid_binary_image(image)
+            processed_image = preprocess_hybrid(image)
             prediction = model_instance.predict(processed_image)[0]
         else:
             return jsonify({'result': 'Invalid model type!'}), 400
