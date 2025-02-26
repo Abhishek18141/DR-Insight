@@ -40,6 +40,10 @@ class ContactUs(db.Model):
     Message = db.Column(db.String(250), nullable=False)
     Date_and_Time = db.Column(db.String(12), nullable=True)
 
+# Initialize the database
+with app.app_context():
+    db.create_all()
+    
 # Route for the homepage
 @app.route('/')
 def home():
