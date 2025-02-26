@@ -217,8 +217,7 @@
         </ul>
         <p>We use the following models for classification:</p>
         <ul>
-            <li><b>DL (Deep Learning):</b> InceptionV3 for feature extraction and classification.</li>
-            <li><b>Hybrid Model:</b> InceptionV3 for feature extraction and MLP for classification.</li>
+            <li><b>Hybrid Model:</b> InceptionV3 for feature extraction and Random Forest for classification.</li>
         </ul>
     </div>
     <div class="demo-images">
@@ -266,15 +265,14 @@
         <form id="upload-form" enctype="multipart/form-data">
             <input type="file" name="image" id="image" accept="image/*" required>
             <div class="classification-buttons">
-                <button type="button" onclick="classifyImage('dl')">DL Model</button>
-                <button type="button" onclick="classifyImage('hybrid')">Hybrid Model</button>
+                <button type="button" onclick="classifyImage('hybrid')">classify</button>
                 <button type="button" onclick="cleanData()">Clean Data</button>
             </div>
         </form>
         <div class="uploaded-image" id="uploaded-image"></div>
     </div>
     <div class="output-area" id="output-area">
-        Click a classification button to see the result here.
+        Click a classify button to see the result here.
     </div>
 
     <footer>
