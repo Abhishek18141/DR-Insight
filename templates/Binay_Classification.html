@@ -201,7 +201,7 @@
 
     <section class="hero">
         <h2>Binary Classification</h2>
-        <p>This page focuses on the binary classification of Diabetic Retinopathy using DL, and Hybrid models.</p>
+        <p>This page focuses on the binary classification of Diabetic Retinopathy using Hybrid models.</p>
         <p class="slogan">"Diabetic Retinopathy? Yes or No—Let AI Decide!"</p>
     </section>
 
@@ -209,7 +209,6 @@
         <h2>About Binary Classification</h2>
         <p>Binary classification focuses on identifying whether a given retina image indicates the presence or absence of Diabetic Retinopathy. This process uses:</p>
         <ul>
-            <li><b>DL (Deep Learning):</b> InceptionV3 for end-to-end feature extraction and classification.</li>
             <li><b>Hybrid Model:</b> MobileNetV2 for feature extraction and MLP for classification.</li>
         </ul>
     </div>
@@ -235,7 +234,6 @@
         <form id="upload-form" enctype="multipart/form-data">
             <input type="file" name="image" id="image" accept="image/*" required>
             <div class="classification-buttons">
-                <button type="button" onclick="classifyImage('dl')">DL Model</button>
                 <button type="button" onclick="classifyImage('hybrid')">Hybrid Model</button>
                 <button type="button" onclick="cleanData()">Clean Data</button>
             </div>
