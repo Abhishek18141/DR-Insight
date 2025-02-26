@@ -81,7 +81,7 @@ def contact():
             except Exception as e:
                 db.session.rollback()
                 print(f"Error: {e}")
-                return "There was an issue saving your data to the database."
+                return f"There was an issue saving your data to the database. Error: {str(e)}"
             
             return render_template('Contact_Us.html', message="Thank you for your message!")
         else:
