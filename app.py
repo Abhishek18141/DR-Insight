@@ -103,7 +103,7 @@ def predict_binary(model):
 
 
         # Preprocess the image based on the selected model
-        elif model == 'dl':
+        if model == 'dl':
             processed_image = preprocess_dl_image(image)
             prediction = binary_dl.predict(processed_image)
             predicted_label = "No Diabetic Retinopathy" if prediction < 0.5 else "Diabetic Retinopathy"
@@ -148,7 +148,7 @@ def predict_multiclass(model):
         print("Image size:", image.size)
 
         # Preprocess the image based on the selected model
-        elif model == 'dl':
+        if model == 'dl':
             processed_image = preprocess_dl_image(image)
             prediction = multiclass_dl.predict(processed_image).argmax(axis=1)[0]
         elif model == 'hybrid':
