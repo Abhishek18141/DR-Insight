@@ -7,11 +7,36 @@ import joblib
 import tensorflow as tf
 from PIL import Image
 
+# assigning none to variables
+binary_dl = None
+multiclass_dl = None
+binary_hybrid = None
+multiclass_hybrid = None
+
 # Load models
-binary_dl = tf.keras.models.load_model('models/binary_classification_InceptionV3.h5')
-multiclass_dl = tf.keras.models.load_model('models/multiclass_model_inceptionv3.h5')
-binary_hybrid = joblib.load('models/MLP_hybrid_DL2_BC.pkl')
-multiclass_hybrid = joblib.load('models/MLP_hybrid_DL1_MC.pkl')
+def load_binary_dl_model():
+    global binary_dl
+    if binary_dl is None:
+        binary_dl = tf.keras.models.load_model('models/binary_classification_InceptionV3.h5')
+    return binary_dl
+
+def load_binary_hybrid_model():
+    global binary_hybrid
+    if binary_hybrid is None:
+        binary_hybrid = joblib.load('models/MLP_hybrid_DL2_BC.pkl')
+    return binary_hybrid
+
+def load_multiclass_dl_model():
+    global multiclass_dl
+    if multiclass_dl is None:
+        multiclass_dl = tf.keras.models.load_model('models/multiclass_model_inceptionv3.h5')
+    return multiclass_dl
+
+def load_multiclass_hybrid_model():
+    global multiclass_hybrid
+    if multiclass_hybrid is None:
+        multiclass_hybrid = joblib.load('models/MLP_hybrid_DL1_MC.pkl')
+    return multiclass_hybrid
 
 app = Flask(__name__)
 
@@ -104,12 +129,14 @@ def predict_binary(model):
 
         # Preprocess the image based on the selected model
         if model == 'dl':
+            model_instance = load_binary_dl_model()
             processed_image = preprocess_dl_image(image)
-            prediction = binary_dl.predict(processed_image)
+            prediction = model_instance.predict(processed_image)
             predicted_label = "No Diabetic Retinopathy" if prediction < 0.5 else "Diabetic Retinopathy"
         elif model == 'hybrid':
+            model_instance = load_binary_hybrid_model()
             processed_image = preprocess_hybrid_binary_image(image)
-            prediction = binary_hybrid.predict(processed_image)
+            prediction = model_instance.predict(processed_image)
             predicted_label = "No Diabetic Retinopathy" if prediction < 0.5 else "Diabetic Retinopathy"
         else:
             return jsonify({'result': 'Invalid model type!'}), 400
@@ -149,11 +176,13 @@ def predict_multiclass(model):
 
         # Preprocess the image based on the selected model
         if model == 'dl':
+            model_instance = load_multiclass_dl_model()
             processed_image = preprocess_dl_image(image)
-            prediction = multiclass_dl.predict(processed_image).argmax(axis=1)[0]
+            prediction = model_instance.predict(processed_image).argmax(axis=1)[0]
         elif model == 'hybrid':
+            model_instance = load_multiclass_hybrid_model()
             processed_image = preprocess_hybrid_multiclass_image(image)
-            prediction = multiclass_hybrid.predict(processed_image)[0]
+            prediction = model_instance.predict(processed_image)[0]
         else:
             return jsonify({'result': 'Invalid model type!'}), 400
 
