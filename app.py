@@ -38,10 +38,11 @@ class ContactUs(db.Model):
     Email = db.Column(db.String(25), nullable=False)
     Subject = db.Column(db.String(50), nullable=False)
     Message = db.Column(db.String(250), nullable=False)
-    Date_and_Time = db.Column(db.String(12), nullable=True)
+    Date_and_Time = db.Column(db.DateTime, nullable=True)
 
 # Initialize the database
 with app.app_context():
+    db.drop_all()
     db.create_all()
     
 # Route for the homepage
