@@ -166,10 +166,5 @@ def predict_multiclass(model):
         print(f"Error during multiclass prediction: {e}")  # For debugging purposes
         return jsonify({'result': f'An error occurred: {str(e)}'}), 500
 
-# Route to serve PDFs
- @app.route('/pdfs/<filename>')
- def download_pdf(filename):
-     return send_from_directory('static/pdfs', filename)
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
