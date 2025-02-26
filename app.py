@@ -2,14 +2,12 @@ import os
 from flask import Flask, render_template, send_from_directory, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from preprocessing_ML_DL_Hybrid import preprocess_ml_image, preprocess_dl_image, preprocess_hybrid_binary_image, preprocess_hybrid_multiclass_image
+from preprocessing_ML_DL_Hybrid import preprocess_dl_image, preprocess_hybrid_binary_image, preprocess_hybrid_multiclass_image
 import joblib
 import tensorflow as tf
 from PIL import Image
 
 # Load models
-binary_ml = joblib.load('models/mlp_ML_code_BC&MC_b.pkl')
-multiclass_ml = joblib.load('models/mlp_ML_code_BC&MC.pkl')
 binary_dl = tf.keras.models.load_model('models/binary_classification_InceptionV3.h5')
 multiclass_dl = tf.keras.models.load_model('models/multiclass_model_inceptionv3.h5')
 binary_hybrid = joblib.load('models/MLP_hybrid_DL2_BC.pkl')
@@ -88,12 +86,7 @@ def predict_binary(model):
 
         image = Image.open(image_file.stream)
 
-        if model == 'ml':
-            processed_image = preprocess_ml_image(image)
-            prediction = binary_ml.predict(processed_image)
-            predicted_label = "No Diabetic Retinopathy" if prediction == 0 else "Diabetic Retinopathy"
-
-        elif model == 'dl':
+        if model == 'dl':
             processed_image = preprocess_dl_image(image)
             prediction = binary_dl.predict(processed_image)
             predicted_label = "No Diabetic Retinopathy" if prediction < 0.5 else "Diabetic Retinopathy"
@@ -123,11 +116,7 @@ def predict_multiclass(model):
 
         image = Image.open(image_file.stream)
 
-        if model == 'ml':
-            processed_image = preprocess_ml_image(image)
-            prediction = multiclass_ml.predict(processed_image)[0]
-
-        elif model == 'dl':
+        if model == 'dl':
             processed_image = preprocess_dl_image(image)
             prediction = multiclass_dl.predict(processed_image).argmax(axis=1)[0]
 
