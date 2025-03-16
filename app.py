@@ -21,7 +21,7 @@ def load_binary_hybrid_model():
 def load_multiclass_hybrid_model():
     global multiclass_hybrid
     if multiclass_hybrid is None:
-        multiclass_hybrid = joblib.load('models/RF_hybrid_DL2_MC.pkl')
+        multiclass_hybrid = joblib.load('models/updated_SVM_hybrid_DL2_MC.pkl')
     return multiclass_hybrid
 
 app = Flask(__name__)
