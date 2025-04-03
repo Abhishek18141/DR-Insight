@@ -46,7 +46,7 @@ def about():
     return render_template('About_Project.html')
 
 # Route for Contact Us page (GET request renders the contact form)
-@app.route('/contact', methods=['GET'])
+@app.route('/Contact_Us', methods=['GET'])
 def contact_page():
     return render_template('Contact_Us.html')
 
@@ -54,7 +54,7 @@ def contact_page():
 FORMSPREE_URL = "https://formspree.io/f/mgvavrqz"  # Replace with your own Formspree endpoint
 
 # Route for Contact Us page
-@app.route('/contact', methods=['POST'])
+@app.route('/Contact_Us', methods=['POST'])
 def contact():
     try:
         # Retrieve form data from the request
