@@ -1,11 +1,10 @@
 import os
-from flask import Flask, render_template, send_from_directory, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, render_template, request, jsonify
 from datetime import datetime
 from preprocessing_Hybrid import preprocess_hybrid
 import joblib
-import tensorflow as tf
 from PIL import Image
+import requests
 
 # assigning none to variables
 binary_hybrid = None
@@ -26,24 +25,6 @@ def load_multiclass_hybrid_model():
 
 app = Flask(__name__)
 
-# Update with Render PostgreSQL database URL
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://retina_database_user:79ee5LOq1e1vLveMrbbte4vtnugMaHdV@dpg-cuv1bopu0jms73a00krg-a/retina_database')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-
-# Contact us model
-class ContactUs(db.Model):
-    SrNo = db.Column(db.Integer, primary_key=True)
-    Full_Name = db.Column(db.String(50), nullable=False)
-    Email = db.Column(db.String(25), nullable=False)
-    Subject = db.Column(db.String(50), nullable=False)
-    Message = db.Column(db.String(250), nullable=False)
-    Date_and_Time = db.Column(db.DateTime, nullable=True)
-
-# Initialize the database
-with app.app_context():
-    db.create_all()
-    
 # Route for the homepage
 @app.route('/')
 def home():
@@ -64,30 +45,41 @@ def multiclass_classification():
 def about():
     return render_template('About_Project.html')
 
+# Formspree endpoint (replace with your Formspree URL)
+FORMSPREE_URL = "https://formspree.io/f/mgvavrqz"  # Replace with your own Formspree endpoint
+
 # Route for Contact Us page
-@app.route('/Contact_Us', methods=['GET', 'POST'])
+@app.route('/contact', methods=['POST'])
 def contact():
-    if request.method == 'POST':
-        Full_Name = request.form.get('name')
-        Email = request.form.get('email')
-        Subject = request.form.get('subject')
-        Message = request.form.get('message')
+    try:
+        # Retrieve form data from the request
+        name = request.form.get('name')
+        email = request.form.get('email')
+        subject = request.form.get('subject')
+        message = request.form.get('message')
+
+        # Validate data (can be enhanced further)
+        if not name or not email or not subject or not message:
+            return jsonify({'result': 'All fields are required.'}), 400
         
-        if Full_Name and Email and Subject and Message:
-            entry = ContactUs(Full_Name=Full_Name, Email=Email, Subject=Subject, Message=Message, Date_and_Time=datetime.now())
-            db.session.add(entry)
-            try:
-                db.session.commit()
-            except Exception as e:
-                db.session.rollback()
-                print(f"Error: {e}")
-                return f"There was an issue saving your data to the database. Error: {str(e)}"
-            
-            return render_template('Contact_Us.html', message="Thank you for your message!")
+        # Prepare data to be sent to Formspree
+        form_data = {
+            'name': name,
+            'email': email,
+            'subject': subject,
+            'message': message
+        }
+
+        # Send the form data to Formspree using a POST request
+        response = requests.post(FORMSPREE_URL, data=form_data)
+
+        # Check the response status
+        if response.status_code == 200:
+            return jsonify({'result': 'Your message has been sent successfully!'}), 200
         else:
-            return "All fields are required."
-    
-    return render_template('Contact_Us.html')
+            return jsonify({'result': 'There was an issue sending your message. Please try again later.'}), 500
+    except Exception as e:
+        return jsonify({'result': f'An error occurred: {str(e)}'}), 500
 
 @app.route('/predict_binary/<model>', methods=['POST'])
 def predict_binary(model):
