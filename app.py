@@ -45,6 +45,11 @@ def multiclass_classification():
 def about():
     return render_template('About_Project.html')
 
+# Route for Contact Us page (GET request renders the contact form)
+@app.route('/contact', methods=['GET'])
+def contact_page():
+    return render_template('Contact_Us.html')
+
 # Formspree endpoint (replace with your Formspree URL)
 FORMSPREE_URL = "https://formspree.io/f/mgvavrqz"  # Replace with your own Formspree endpoint
 
